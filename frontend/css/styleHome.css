@@ -1,0 +1,118 @@
+.dashboard-text {
+    font-family: "Istok Web-Bold", Helvetica;
+    font-weight: 700;
+    color: #ebdac1;
+    font-size: 40px;
+    letter-spacing: 0;
+    line-height: normal;
+    margin: 0; /* Ajuste para eliminar el margen predeterminado de los elementos h1 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .row {
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  header {
+    position: relative;
+  }
+
+  header::after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 50px;
+    right: 50px;
+    height: 2.5px;
+    background-color: rgba(128, 130, 135, 0.71); /* Color con transparencia */
+  }
+
+  header .container-fluid {
+    padding-bottom: 10px; /* Ajusta el valor según sea necesario */
+  }
+  body {
+    background-color: #2d3039;
+  }
+  header .an-informative-panel {
+    font-family: "Istok Web-Bold", Helvetica;
+    font-weight: 100;
+    color: #ffffff6b;
+    font-size: 18px;
+  }
+  body .card {
+    background-color: #393C43;
+    color: #ebdac1;
+  }
+  .chat-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #393C43;
+    border: none;
+    border-radius: 50%;
+    width: 96px;
+    height: 96px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .chat-button img {
+    width: 80%; /* Ajusta el tamaño de la imagen según sea necesario */
+    border-radius: 50%;
+  }
+  .chat-button:hover {
+    transform: scale(1.2); /* Aumenta el tamaño al pasar el cursor sobre el botón */
+  }
+  .dashboard-text {
+    margin-bottom: 0; /* Elimina el espacio debajo del h1 */
+  }
+
+  .dashboard-container {
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .dashboard-container:hover {
+    transform: scale(1.05);
+  }
+
+  .dashboard-button {
+    display: inline-block;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .dashboard-button:hover {
+    transform: scale(1.2);
+  }
+/* Estilo personalizado para los botones */
+.btn {
+  position: relative;
+  bottom: 20px;
+  right: 20px;
+  background-color: #393C43;
+  border: none;
+  border-radius: 15px; /* Ajusta el radio de las esquinas según sea necesario */
+  width: 96px;
+  height: 96px;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px;
+}
+#crudForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: auto;
+}
+
+

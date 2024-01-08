@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Devices</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../css/styleHome.css" />
+  <link rel="stylesheet" href="../../js/generatedCards.js">
+</head>
+<body>
+  <header>
+    <div class="container-fluid">
+      <div class="row">
+        <a href="../homeClient.html" class="dashboard-button">
+          <img src="../../img/icon-home.png" alt="iconHome" width="64px">
+        </a>
+        <div>
+            <div class="row">
+                <img src="../../img/icon-devices.png" alt="iconDevices" width="52px">
+                <h1 class="dashboard-text" style="padding-left: 10px;">TOTAL DEVICES</h1>
+            </div>
+                <p class="an-informative-panel mt-1">
+                  Shows in categories the devices
+                </p>
+        </div>
+        <a href="#" class="dashboard-button">
+          <img src="../../img/icon-user.png" alt="iconUser" width="64px">
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="container-fluid w-50 mx-auto" style="margin-top: 20px;" id="dashboardContainer">
+    <div class="row">
+        <!-- Las tarjetas se generarán aquí con JavaScript -->
+    </div>
+    <!-- Botón del chat -->
+    <button class="chat-button" onclick="openChat()">
+      <img src="../../img/icon-chatbot.png" alt="Chat Icon">
+    </button>
+  </div>
+
+  <!-- Incluye el script de Bootstrap al final del cuerpo para mejorar el rendimiento -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="../../js/generatedCards.js"></script>
+
+  <!-- Incluye cualquier otro script personalizado aquí -->
+  
+  <script>
+    function openChat() {
+      // Coloca aquí el código para abrir el chat con el chatbot
+      alert('Abre el chat con el chatbot aquí');
+    }
+  </script>
+</body>
+</html>

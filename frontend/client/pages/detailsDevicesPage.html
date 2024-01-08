@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Details</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../css/styleHome.css" />
+</head>
+<body>
+  <header>
+    <div class="container-fluid">
+      <div class="row">
+        <a href="../homeClient.html" class="dashboard-button">
+          <img src="../../img/icon-home.png" alt="iconHome" width="64px">
+        </a>
+        <div>
+          <div class="row">
+            <img id="categoryIcon" src="../../img/icon-devices.png" alt="iconDevices" width="52px">
+            <h1 id="categoryTitle" class="dashboard-text" style="padding-left: 10px;">DETAILS</h1>
+          </div>
+          <p class="an-informative-panel mt-1">
+            <br>
+          </p>
+        </div>
+        <a href="#" class="dashboard-button">
+          <img src="../../img/icon-user.png" alt="iconUser" width="64px">
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="container-fluid w-75 mx-auto" style="margin-top: 20px;">
+    <!-- Tabla para mostrar detalles de dispositivos -->
+    <table class="table table-bordered table-dark table-hover">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Consumption</th>
+          <th>Emissions</th>
+          <th>Status</th>
+          <th>Room Number</th>
+        </tr>
+      </thead>
+      <tbody id="deviceDetailsTableBody">
+        <!-- Aquí se generarán dinámicamente las filas de la tabla con JavaScript -->
+      </tbody>
+    </table>
+
+    <!-- Incluye el script de Bootstrap al final del cuerpo para mejorar el rendimiento -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Incluye el script de detalles de dispositivos -->
+    <script src="../../js/deviceDetails.js"></script>
+  </div>
+</body>
+</html>
