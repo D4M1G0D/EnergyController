@@ -90,16 +90,21 @@
     <img src="../img/icon-chatbot.png" alt="Chat Icon">
   </button>
 
+  <!-- Ventana flotante (modal) -->
+  <div id="chatModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeChatModal()">&times;</span>
+      <!-- Contenido del chat aquí -->
+      <p>¡Bienvenido al chat!</p>
+    </div>
+  </div>
+
   <!-- Incluye el script de Bootstrap al final del cuerpo para mejorar el rendimiento -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <!-- Incluye cualquier otro script personalizado aquí -->
-  <script>
-    function openChat() {
-      // Coloca aquí el código para abrir el chat con el chatbot
-      alert('Abre el chat con el chatbot aquí');
-    }
+  <script src="../js/chat.js">
   </script>
 </body>
 </html>

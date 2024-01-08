@@ -115,4 +115,27 @@
   margin: auto;
 }
 
+/* Estilos para la ventana flotante */
+.modal {
+  display: none;
+  position: fixed;
+  bottom: 20px; /* Ajusta la distancia desde la parte inferior */
+  right: 20px; /* Ajusta la distancia desde la parte derecha */
+  width: 50%;
+  height: 50%;
+}
 
+.modal-content {
+  position: absolute;
+  background-color: #ffffff6b;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
