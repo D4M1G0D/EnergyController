@@ -7,13 +7,14 @@
   <title>Dashboard de Energía</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="../css/styleHome.css" />
+  <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
 </head>
 
 <body>
   <header>
     <div class="container-fluid">
       <div class="row">
-        <a href="homeClient.html" class="dashboard-button">
+        <a href="../client/homeClient.html" class="dashboard-button">
           <img src="../img/icon-home.png" alt="iconHome" width="64px">
         </a>
         <div>
@@ -35,7 +36,7 @@
   <div class="container-fluid w-50 mx-auto" style="margin-top: 20px;" id="dashboardContainer">
     <div class="row">
       <div class="col-md-6">
-        <a href="pages/totalDevicesPage.html" class="card dashboard-container" style="text-decoration: none">
+        <a href="../client/pages/totalDevicesPage.html" class="card dashboard-container" style="text-decoration: none">
           <div class="card-body">
             <div class="row">
               <img src="../img/icon-devices.png" alt="iconDevices" width="100px">
@@ -50,7 +51,7 @@
       </div>
 
       <div class="col-md-6 dashboard-container">
-        <a href="pages/consumptionPage.html" class="card dashboard-container" style="text-decoration: none">
+        <a href="../client/pages/consumptionPage.html" class="card dashboard-container" style="text-decoration: none">
           <div class="card-body">
             <div class="row">
               <img src="../img/icon-consumption.png" alt="iconConsumption" width="100px">
@@ -67,7 +68,7 @@
 
     <div class="row" style="margin-top: 20px;" class="dashboard-container">
       <div class="col-md-6">
-        <a href="pages/emissionsPage.html" class="card dashboard-container" style="text-decoration: none">
+        <a href="../client/pages/emissionsPage.html" class="card dashboard-container" style="text-decoration: none">
           <div class="card-body">
             <div class="row">
               <img src="../img/icon-emissions.png" alt="icon-emissions" width="100px">
@@ -87,29 +88,28 @@
     </div>
   </div>
 
- <!-- Ventana emergente del chat -->
- <div id="chat-popup">
-  <section id="chat">
-  <div id="chat-container">
-      <div id="chat-header">
-          Chat de Ayuda
+  </script>
+
+  <!-- Ventana emergente del chat -->
+  <div id="chat-popup">
+    <section id="chat">
+      <div id="chat-container">
+        <div id="chat-header">
           <span id="close-chat" onclick="closeChat()">×</span>
-      </div>
-      <div id="chat-body">
-          <p><strong>Asistente:</strong> ¡Hola! ¿En qué puedo ayudarte hoy?</p>
+          <h1 class="dashboard-text" style="font-size: medium;">Chat de Ayuda</h1>
+        </div>
+        <div id="chat-body">
           <ul id="messages"></ul>
         </div>
         <form id="form" action="">
-      <input type="text" id="user-input" placeholder="Escribe tu mensaje...">
-      <button id="send-btn" onclick="sendMessage()">Enviar</button>
-    </form>
-    </div>
-  </section>
-</div>
 
+          <input type="text" id="input" placeholder="Input a message" autocomplete="off" style="width: 100%;" />
+          <button id="send-btn">Send</button>
+        </form>
+      </div>
+    </section>
+  </div>
 
-
-</section>
 
   <!-- Botón del chat -->
   <button class="chat-button" onclick="openChat()">
@@ -122,21 +122,12 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="../js/chat.js"></script>
+  <!-- chat -->
+  <script type="module" src="../js/chat.js"></script>
   <!-- Incluye cualquier otro script personalizado aquí -->
-  <script>
-    function openChat() {
-      var chatPopup = document.getElementById('chat-popup');
-      chatPopup.style.display = 'block';
-    }
-
-    function closeChat() {
-      var chatPopup = document.getElementById('chat-popup');
-      chatPopup.style.display = 'none';
-    }
+  <script src="../js/buttonChat.js"></script>
 
 
-  </script>
 
 </body>
 
