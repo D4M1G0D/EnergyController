@@ -115,27 +115,63 @@
   margin: auto;
 }
 
-/* Estilos para la ventana flotante */
-.modal {
+/*Chat*/
+#chat-header {
+  position: relative;
+}
+
+#close-chat {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+  cursor: pointer;
+}
+
+#chat-popup {
   display: none;
   position: fixed;
-  bottom: 20px; /* Ajusta la distancia desde la parte inferior */
-  right: 20px; /* Ajusta la distancia desde la parte derecha */
-  width: 50%;
-  height: 50%;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
 }
 
-.modal-content {
-  position: absolute;
-  background-color: #ffffff6b;
-  padding: 20px;
+#chat-container {
+  width: 300px;
+  margin: 50px auto;
+  background-color: rgba(128, 130, 135, 0.71);
   border-radius: 5px;
+  overflow: hidden;
 }
 
-.close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 20px;
+#chat-header {
+  background-color: #393C43;
+  color: #ebdac1;
+  padding: 10px;
+  text-align: center;
+}
+
+#chat-body {
+  color: #ebdac1;
+  padding: 10px;
+  height: 300px;
+  overflow-y: scroll;
+}
+
+#user-input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border: none;
+  
+}
+
+#send-btn {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: #393C43;;
+  color: #ebdac1;
+  border: none;
   cursor: pointer;
 }

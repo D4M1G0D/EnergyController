@@ -7,12 +7,12 @@ const Connection = require('tedious').Connection;
 const Request = require('tedious').Request;
 
 const config = {
-    server: 'DESKTOP-5DU0K07',
+    server: 'srv-polimusic-g1-wr.database.windows.net',
     authentication: {
         type: 'default',
         options: {
-            userName: "sa",
-            password: "admin"
+            userName: "usr_polimusic_sa",
+            password: "EpnFis01"
         }
     },
     options: {

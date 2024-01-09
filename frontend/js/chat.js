@@ -1,20 +1,29 @@
-// Función para abrir la ventana flotante
-function openChat() {
-    var modal = document.getElementById('chatModal');
-    modal.style.display = 'block';
-  }
-  
-  // Función para cerrar la ventana flotante
-  function closeChatModal() {
-    var modal = document.getElementById('chatModal');
-    modal.style.display = 'none';
-  }
-  
-  // Cierra la ventana flotante si se hace clic fuera de ella
-  window.onclick = function(event) {
-    var modal = document.getElementById('chatModal');
-    if (event.target == modal) {
-      modal.style.display = 'none';
+import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
+const socket = io()
+const form = document.getElementById('form');
+
+const input = document.getElementById('input');
+
+form.addEventListener('submit', (e) => {
+
+    e.preventDefault();
+
+    if (input.value) {
+
+        socket.emit('chat message', input.value);
+
+        input.value = '';
+
     }
-  };
-  
+
+});
+
+const messages = document.getElementById('messages');
+
+socket.on('chat message', msg => {
+
+    const item = `<li>${msg}</li>`;
+
+    messages.insertAdjacentHTML('beforeend', item);
+
+})

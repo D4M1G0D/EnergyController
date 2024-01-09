@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -7,6 +8,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="../css/styleHome.css" />
 </head>
+
 <body>
   <header>
     <div class="container-fluid">
@@ -15,12 +17,12 @@
           <img src="../img/icon-home.png" alt="iconHome" width="64px">
         </a>
         <div>
-            <div class="row">
-                <h1 class="dashboard-text" style="padding-left: 10px;">DASHBOARD</h1>
-            </div>
-                <p class="an-informative-panel mt-1">
-                  An informative panel for your devices management&nbsp;&nbsp;and expenses monitoring
-                </p>
+          <div class="row">
+            <h1 class="dashboard-text" style="padding-left: 10px;">DASHBOARD</h1>
+          </div>
+          <p class="an-informative-panel mt-1">
+            An informative panel for your devices management&nbsp;&nbsp;and expenses monitoring
+          </p>
         </div>
         <a href="#" class="dashboard-button">
           <img src="../img/icon-user.png" alt="iconUser" width="64px">
@@ -28,7 +30,7 @@
       </div>
     </div>
   </header>
-  
+
 
   <div class="container-fluid w-50 mx-auto" style="margin-top: 20px;" id="dashboardContainer">
     <div class="row">
@@ -85,26 +87,57 @@
     </div>
   </div>
 
+ <!-- Ventana emergente del chat -->
+ <div id="chat-popup">
+  <section id="chat">
+  <div id="chat-container">
+      <div id="chat-header">
+          Chat de Ayuda
+          <span id="close-chat" onclick="closeChat()">×</span>
+      </div>
+      <div id="chat-body">
+          <p><strong>Asistente:</strong> ¡Hola! ¿En qué puedo ayudarte hoy?</p>
+          <ul id="messages"></ul>
+        </div>
+        <form id="form" action="">
+      <input type="text" id="user-input" placeholder="Escribe tu mensaje...">
+      <button id="send-btn" onclick="sendMessage()">Enviar</button>
+    </form>
+    </div>
+  </section>
+</div>
+
+
+
+</section>
+
   <!-- Botón del chat -->
   <button class="chat-button" onclick="openChat()">
     <img src="../img/icon-chatbot.png" alt="Chat Icon">
   </button>
 
-  <!-- Ventana flotante (modal) -->
-  <div id="chatModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeChatModal()">&times;</span>
-      <!-- Contenido del chat aquí -->
-      <p>¡Bienvenido al chat!</p>
-    </div>
-  </div>
+
 
   <!-- Incluye el script de Bootstrap al final del cuerpo para mejorar el rendimiento -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="../js/chat.js"></script>
   <!-- Incluye cualquier otro script personalizado aquí -->
-  <script src="../js/chat.js">
+  <script>
+    function openChat() {
+      var chatPopup = document.getElementById('chat-popup');
+      chatPopup.style.display = 'block';
+    }
+
+    function closeChat() {
+      var chatPopup = document.getElementById('chat-popup');
+      chatPopup.style.display = 'none';
+    }
+
+
   </script>
+
 </body>
+
 </html>
