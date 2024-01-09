@@ -1,0 +1,19 @@
+<!-- reset-password.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password</title>
+</head>
+<body>
+    <h1>Reset Password</h1>
+    <p>Resetting password for: <%= user %></p>
+    <form action="/reset-password" method="post">
+        <input type="hidden" name="email" value="<%= user %>">
+        <label for="newPassword">New Password:</label>
+        <input type="password" id="newPassword" name="newPassword" required>
+        <button type="submit">Save New Password</button>
+    </form>
+</body>
+</html>
