@@ -2,7 +2,6 @@
 const express = require('express');
 const app = express();
 const nodemailer = require('nodemailer');
-const path = require('path');
 
 // Configuración de nodemailer para enviar correos electrónicos
 const transporter = nodemailer.createTransport({
@@ -59,10 +58,12 @@ const connection = require('./database/db');
         const token = req.query.token; // Puedes obtener el token de la URL
         res.render('reset', { token });
     });
-
     app.get('/admin', (req, res) => {
-        res.sendFile(path.join(__dirname,  'frontend', 'admin', 'homeAdmin.html'));
-    });
+		res.render('admin');
+	});
+    app.get('/cliente', (req, res) => {
+		res.render('cliente');
+	});
 
 //10 - Método para la REGISTRACIÓN
 app.post('/register', async (req, res)=>{
@@ -127,6 +128,17 @@ app.post('/recuperar', (req, res) => {
     });
 });
 
+const renderAlert = (res, title, message, icon, showConfirmButton, timer, ruta) => {
+    res.render('login', {
+        alert: true,
+        alertTitle: title,
+        alertMessage: message,
+        alertIcon: icon,
+        showConfirmButton: showConfirmButton,
+        timer: timer,
+        ruta: ruta
+    });
+};
 //11 - Metodo para la autenticacion
 app.post('/auth', async (req, res)=> {
 	const user = req.body.user;
@@ -147,38 +159,23 @@ app.post('/auth', async (req, res)=> {
 				
 				//Mensaje simple y poco vistoso
                 //res.send('Incorrect Username and/or Password!');				
-			} else {   
-                req.session.loggedin = true;                
+			} else {
+                // Successful login
+                req.session.loggedin = true;
                 req.session.name = results[0].name;
-                req.session.rol = results[0].rol; // Asumiendo que el rol se almacena en la base de datos
 
-                let redirectPage;
-
-                // Determina la página de redirección según el rol
-                switch (req.session.rol) {
+                // Determine the role and render the corresponding view
+                switch (results[0].rol) {
                     case 'admin':
-                        redirectPage = 'admin';
+                        renderAlert(res, 'Conexión exitosa', '¡LOGIN CORRECTO!', 'success', false, 1500, 'admin');
                         break;
                     case 'cliente':
-                        redirectPage = 'reset';
+                        renderAlert(res, 'Conexión exitosa', '¡LOGIN CORRECTO!', 'success', false, 1500, 'cliente');
                         break;
-                    // Agrega más casos según sea necesario para otros roles
                     default:
-                        redirectPage = 'default.html';
-}      
-				//creamos una var de session y le asignamos true si INICIO SESSION       
-				req.session.loggedin = true;                
-				req.session.name = results[0].name;
-				res.render('login', {
-					alert: true,
-					alertTitle: "Conexión exitosa",
-					alertMessage: "¡LOGIN CORRECTO!",
-					alertIcon:'success',
-					showConfirmButton: false,
-					timer: 1500,
-					ruta: redirectPage
-				});        			
-			}			
+                        renderAlert(res, 'Error', 'Rol no reconocido', 'error', true, false, 'login');
+                }
+            }		
 			res.end();
 		});
 	} else {	
