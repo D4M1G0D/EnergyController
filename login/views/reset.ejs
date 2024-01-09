@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restablecimiento de Contraseña</title>
+</head>
+<body>
+    <h1>Restablecimiento de Contraseña</h1>
+    <form action="/reset" method="post">
+        <input type="hidden" name="token" value="<%= token %>">
+        <label for="newPassword">Nueva Contraseña:</label>
+        <input type="password" id="newPassword" name="newPassword" required>
+        <button type="submit">Guardar Nueva Contraseña</button>
+    </form>
+</body>
+</html>
