@@ -2,6 +2,7 @@
 const express = require('express');
 const app = express();
 const nodemailer = require('nodemailer');
+const path = require('path');
 
 // Configuración de nodemailer para enviar correos electrónicos
 const transporter = nodemailer.createTransport({
@@ -57,6 +58,10 @@ const connection = require('./database/db');
     app.get('/reset', (req, res) => {
         const token = req.query.token; // Puedes obtener el token de la URL
         res.render('reset', { token });
+    });
+
+    app.get('/admin', (req, res) => {
+        res.sendFile(path.join(__dirname,  'frontend', 'admin', 'homeAdmin.html'));
     });
 
 //10 - Método para la REGISTRACIÓN
@@ -142,7 +147,25 @@ app.post('/auth', async (req, res)=> {
 				
 				//Mensaje simple y poco vistoso
                 //res.send('Incorrect Username and/or Password!');				
-			} else {         
+			} else {   
+                req.session.loggedin = true;                
+                req.session.name = results[0].name;
+                req.session.rol = results[0].rol; // Asumiendo que el rol se almacena en la base de datos
+
+                let redirectPage;
+
+                // Determina la página de redirección según el rol
+                switch (req.session.rol) {
+                    case 'admin':
+                        redirectPage = 'admin';
+                        break;
+                    case 'cliente':
+                        redirectPage = 'reset';
+                        break;
+                    // Agrega más casos según sea necesario para otros roles
+                    default:
+                        redirectPage = 'default.html';
+}      
 				//creamos una var de session y le asignamos true si INICIO SESSION       
 				req.session.loggedin = true;                
 				req.session.name = results[0].name;
@@ -153,7 +176,7 @@ app.post('/auth', async (req, res)=> {
 					alertIcon:'success',
 					showConfirmButton: false,
 					timer: 1500,
-					ruta: 'recuperar'
+					ruta: redirectPage
 				});        			
 			}			
 			res.end();
@@ -163,30 +186,7 @@ app.post('/auth', async (req, res)=> {
 		res.end();
 	}
 
-	if (user && pass) {
-        connection.query('SELECT * FROM users WHERE user = ?', [user], async (error, results, fields) => {
-            if (results.length === 0 || !(await bcrypt.compare(pass, results[0].pass))) {
-                res.render('login', {
-                    alert: true,
-                    alertTitle: "Error",
-                    alertMessage: "Usuario y/o contraseña incorrectas",
-                    alertIcon: 'error',
-                    showConfirmButton: true,
-                    timer: false,
-                    ruta: 'login'
-                });
-            } else {
-                // Si el usuario y la contraseña son correctos, redirige a la página de restablecimiento de contraseña
-                res.render('reset-password', {
-                    email: results[0].user // Puedes usar results[0].email si el campo es 'email'
-                });
-            }
-            res.end();
-        });
-    } else {
-        res.send('Por favor, ingresa usuario y contraseña');
-        res.end();
-    }
+	
 });
 
 
