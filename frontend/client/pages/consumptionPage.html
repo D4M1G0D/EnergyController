@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -8,6 +9,7 @@
   <link rel="stylesheet" href="../../css/styleHome.css" />
   <link rel="stylesheet" href="../../js/generatedCards.js">
 </head>
+
 <body>
   <header>
     <div class="container-fluid">
@@ -30,8 +32,31 @@
       </div>
     </div>
   </header>
-  
-  
+
+  <!-- Ventana emergente del chat -->
+  <div id="chat-popup">
+    <section id="chat">
+      <div id="chat-container">
+        <div id="chat-header">
+          <span id="close-chat" onclick="closeChat()">×</span>
+          <h1 class="dashboard-text" style="font-size: medium;">Chat de Ayuda</h1>
+        </div>
+        <div id="chat-body">
+          <ul id="messages"></ul>
+        </div>
+        <form id="form" action="">
+
+          <input type="text" id="input" placeholder="Input a message" autocomplete="off" style="width: 100%;" />
+          <button id="send-btn">Send</button>
+        </form>
+      </div>
+    </section>
+  </div>
+  <!-- Botón del chat -->
+  <button class="chat-button" onclick="openChat()">
+    <img src="../../img/icon-chatbot.png" alt="Chat Icon">
+  </button>
+
 
   <!-- Incluye el script de Bootstrap al final del cuerpo para mejorar el rendimiento -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -39,13 +64,9 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="../../js/generatedCards.js"></script>
 
+  <script type="module" src="../../js/chat.js"></script>
   <!-- Incluye cualquier otro script personalizado aquí -->
-  
-  <script>
-    function openChat() {
-      // Coloca aquí el código para abrir el chat con el chatbot
-      alert('Abre el chat con el chatbot aquí');
-    }
-  </script>
+  <script src="../../js/buttonChat.js"></script>
 </body>
+
 </html>

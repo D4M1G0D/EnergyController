@@ -4,7 +4,7 @@
 var devices = {
     cameras: { icon: 'icon-cameras.png', title: 'Cameras', value: '2' },
     switches: { icon: 'icon-switches.png', title: 'Switches', value: '5' },
-    lights: { icon: 'icon-Lights.png', title: 'Lights Iot', value: '10' },
+    lights: { icon: 'icon-Lights.png', title: 'Lightings', value: '10' },
     // Agrega más categorías y dispositivos según sea necesario
 };
 
