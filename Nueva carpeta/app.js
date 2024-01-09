@@ -100,7 +100,14 @@ app.post('/auth', async (req, res)=> {
 					showConfirmButton: false,
 					timer: 1500,
 					ruta: ''
-				});        			
+				});        
+				if (results[0].rol === 'admin') {
+                    res.redirect('/admin/dashboard');
+                } else if (results[0].rol === 'cliente') {
+                    res.redirect('/data-entry/dashboard');
+                } else {
+                    res.redirect('/');
+                }			
 			}			
 			res.end();
 		});
