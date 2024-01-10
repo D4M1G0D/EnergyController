@@ -15,6 +15,8 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server);
 
+let totalDevices = 0;
+
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -25,8 +27,8 @@ server.listen(port, () => {
     console.log(`Server listening on port ${port}`);
 });
 
-app.set('views', path.join(__dirname, '/../frontend/admin'));
-app.use(express.static(path.join(__dirname, '/../frontend/admin')));
+app.set('views', path.join(__dirname, '../../frontend'));
+app.use(express.static(path.join(__dirname, '../../frontend')));
 app.set('view engine', 'ejs');
 
 const config = {
@@ -54,16 +56,28 @@ connection.on('connect', (err) => {
         console.log("Error connecting to the database");
         throw err;
     }
-    getDevices();
+    //getDevices();
+    //getDevicesCount();
+    setInterval(() => {
+        getDevicesCount();
+    }, 1000); 
 });
 
-app.get('/', (req, res) => {
+/*app.get('/', (req, res) => {
+    res.render('client/homeClient',{ totalDevices: totalDevices }); 
+});*/
+
+app.get('/admin', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../frontend/admin/HomeAdmin.html'));
+});
+
+app.get('/client', (req, res) => {
+    res.render('client/homeClient',{ totalDevices: totalDevices }); 
     res.sendFile(path.join(__dirname, '../../frontend/client/homeClient.html'));
 });
 
 io.on('connection', (socket) => {
     console.log('a user connected');
-
     socket.on('chat message', (msg) => {
         io.emit('chat message', msg);
         console.log('message: ' + msg);
@@ -207,8 +221,6 @@ function getDevicesCount() {
         }
     });
 
-    let totalDevices = 0;
-
     request.on('row', (columns) => {
         totalDevices = columns[0].value;
     });
@@ -224,6 +236,3 @@ function getDevicesCount() {
 
     connection.execSql(request);
 }
-
-
-
