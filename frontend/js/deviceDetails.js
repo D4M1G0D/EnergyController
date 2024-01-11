@@ -37,15 +37,15 @@ function generateTableRows(category) {
 
 // Datos ficticios para dispositivos en diferentes categorías
 var devices = {
-  cameras: {
+  Cameras: {
     'device1': { id: 1, consumption: '10W', emissions: '5kg', status: 'Active', roomNumber: '101' },
     'device2': { id: 2, consumption: '8W', emissions: '4kg', status: 'Inactive', roomNumber: '102' },
   },
-  switches: {
+  Switches: {
     'device3': { id: 3, consumption: '15W', emissions: '7kg', status: 'Active', roomNumber: '201' },
     'device4': { id: 4, consumption: '12W', emissions: '6kg', status: 'Inactive', roomNumber: '202' },
   },
-  lights: {
+  Lights: {
     'device5': { id: 5, consumption: '5W', emissions: '3kg', status: 'Active', roomNumber: '301' },
     'device6': { id: 6, consumption: '4W', emissions: '2kg', status: 'Inactive', roomNumber: '302' },
   },

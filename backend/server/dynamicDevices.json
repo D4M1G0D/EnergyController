@@ -1,0 +1,17 @@
+{
+  "Cameras": {
+    "icon": "icon-Cameras.png",
+    "title": "Cameras",
+    "value": "1"
+  },
+  "Lights": {
+    "icon": "icon-Lights.png",
+    "title": "Lights",
+    "value": "2"
+  },
+  "Switches": {
+    "icon": "icon-Switches.png",
+    "title": "Switches",
+    "value": "2"
+  }
+}

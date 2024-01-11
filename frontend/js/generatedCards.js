@@ -1,25 +1,29 @@
-// generatedCards.js
+var socket = io('http://localhost:3000');
+console.log('Socket connected:', socket.connected);
 
-// Lista de dispositivos categorizados
-var devices = {
-    cameras: { icon: 'icon-cameras.png', title: 'Cameras', value: '2' },
-    switches: { icon: 'icon-switches.png', title: 'Switches', value: '5' },
-    lights: { icon: 'icon-Lights.png', title: 'Lightings', value: '10' },
-    // Agrega más categorías y dispositivos según sea necesario
-};
+var devices = {};
 
-// Función para generar tarjetas
+// Fetch dynamicDevices from the server
+fetch('/getDynamicDevices')
+    .then(response => response.json())
+    .then(data => {
+        devices = data;
+        generateCards();
+    })
+    .catch(error => console.error('Error fetching dynamicDevices:', error));
+
+// Function to generate cards
 function generateCards() {
     var dashboardContainer = document.getElementById('dashboardContainer');
-    
-    // Crea una nueva fila al principio
+    // Create a new row at the beginning
+    dashboardContainer.innerHTML = '';
     var row;
 
     for (var category in devices) {
         if (devices.hasOwnProperty(category)) {
             var device = devices[category];
 
-            // Si la fila no está creada o ya tiene 2 tarjetas, crea una nueva fila
+            // If the row is not created or already has 2 cards, create a new row
             if (!row || row.children.length === 2) {
                 row = document.createElement('div');
                 row.className = 'row';
@@ -46,9 +50,10 @@ function generateCards() {
             row.innerHTML += cardHtml;
         }
     }
+    console.log('Devices:', devices);
 }
 
-// Llama a la función para generar las tarjetas al cargar la página
+// Call the function to generate cards when the page loads
 window.onload = function() {
-    generateCards();
+     generateCards();
 };

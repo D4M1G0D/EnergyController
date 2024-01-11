@@ -6,6 +6,7 @@ import { createServer } from 'node:http';
 import { Server } from 'socket.io';
 import bodyParser from 'body-parser';
 import { Connection, Request, TYPES } from 'tedious';
+import fs from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -16,6 +17,7 @@ const server = createServer(app);
 const io = new Server(server);
 
 let totalDevices = 0;
+const dynamicDevices = {};
 
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -58,9 +60,14 @@ connection.on('connect', (err) => {
     }
     //getDevices();
     //getDevicesCount();
+    
     setInterval(() => {
         getDevicesCount();
-    }, 1000); 
+    }, 1000);
+
+    generateDynamicDevices();
+
+    
 });
 
 /*app.get('/', (req, res) => {
@@ -76,6 +83,27 @@ app.get('/client', (req, res) => {
     res.sendFile(path.join(__dirname, '../../frontend/client/homeClient.html'));
 });
 
+app.get('/getDynamicDevices', (req, res) => {
+    const filePath = path.join(__dirname, 'dynamicDevices.json');
+
+    fs.readFile(filePath, 'utf-8', (err, data) => {
+        if (err) {
+            console.error("Error reading dynamicDevices file:", err.message);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+
+        const dynamicDevices = JSON.parse(data);
+        res.json(dynamicDevices);
+    });
+});
+
+// Manejo del evento 'disconnect' en Socket.IO
+io.on('disconnect', () => {
+    console.log('Client disconnected');
+    connection.close();
+});
+
 io.on('connection', (socket) => {
     console.log('a user connected');
     socket.on('chat message', (msg) => {
@@ -88,7 +116,7 @@ io.on('connection', (socket) => {
     });
 });
 
-app.post('/addDevice', (req, res) => {
+/*app.post('/addDevice', (req, res) => {
     const newDeviceData = req.body;
     console.log(newDeviceData);
 
@@ -180,6 +208,7 @@ app.post('/updateDevice', (req, res) => {
     }
 });
 
+
 function getDevices() {
     console.log("Connected to the database")
     const request = new Request("SELECT * FROM DEVICE", (err, rowCount) => {
@@ -210,7 +239,8 @@ function getDevices() {
     });
 
     connection.execSql(request);
-}
+}*/
+
 
 function getDevicesCount() {
     console.log("Connected to the database")
@@ -232,6 +262,46 @@ function getDevicesCount() {
 
     request.on('done', (rowCount, more, rows) => {
         connection.close();
+    });
+
+    connection.execSql(request);
+}
+
+function saveDynamicDevicesToFile() {
+    const filePath = path.join(__dirname, 'dynamicDevices.json');
+    const jsonData = JSON.stringify(dynamicDevices, null, 2);
+
+    fs.writeFileSync(filePath, jsonData, 'utf-8');
+
+    console.log(`Dynamic devices saved to ${filePath}`);
+}
+
+
+function generateDynamicDevices() {
+    const request = new Request("SELECT Category, COUNT(*) AS DeviceCount FROM DEVICE GROUP BY Category", (err, rowCount) => {
+        if (err) {
+            console.log("Error executing query:", err.message);
+            throw err;
+        }
+    });
+
+    request.on('row', (columns) => {
+        const category = columns[0].value;
+        const deviceCount = columns[1].value;
+
+        dynamicDevices[category] = {
+            icon: `icon-${category.charAt(0).toUpperCase()}${category.slice(1)}.png`,
+            title: category.charAt(0).toUpperCase() + category.slice(1),
+            value: deviceCount.toString(),  // Establece el valor como la cuenta real de dispositivos
+        };
+
+        // Log the dynamically generated device for each category
+        console.log(`Generated device for category '${category}':`, dynamicDevices[category]);
+    });
+
+    request.on('doneInProc', (rowCount, more, rows) => {
+        io.emit('dynamicDevices', dynamicDevices); // Envía las categorías generadas dinámicamente al cliente
+        saveDynamicDevicesToFile(); // Guarda dynamicDevices en un archivo
     });
 
     connection.execSql(request);

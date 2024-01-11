@@ -7,14 +7,16 @@
   <title>Devices</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="../../css/styleHome.css" />
-  <link rel="stylesheet" href="../../js/generatedCards.js">
+  <!-- Incluye la biblioteca Socket.io -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+  <script src="../../js/generatedCards.js"></script>
 </head>
 
 <body>
   <header>
     <div class="container-fluid">
       <div class="row">
-        <a href="../homeClient.html" class="dashboard-button">
+        <a href="http://localhost:3000/client/" class="dashboard-button">
           <img src="../../img/icon-home.png" alt="iconHome" width="64px">
         </a>
         <div>
@@ -37,40 +39,40 @@
     <div class="row">
       <!-- Las tarjetas se generarán aquí con JavaScript -->
     </div>
-
-    <!-- Ventana emergente del chat -->
-    <div id="chat-popup">
-      <section id="chat">
-        <div id="chat-container">
-          <div id="chat-header">
-            <span id="close-chat" onclick="closeChat()">×</span>
-            <h1 class="dashboard-text" style="font-size: medium;">Chat de Ayuda</h1>
-          </div>
-          <div id="chat-body">
-            <ul id="messages"></ul>
-          </div>
-          <form id="form" action="">
-
-            <input type="text" id="input" placeholder="Input a message" autocomplete="off" style="width: 100%;" />
-            <button id="send-btn">Send</button>
-          </form>
-        </div>
-      </section>
-    </div>
-    <!-- Botón del chat -->
-    <button class="chat-button" onclick="openChat()">
-      <img src="../../img/icon-chatbot.png" alt="Chat Icon">
-    </button>
   </div>
+
+   <!-- Ventana emergente del chat -->
+   <div id="chat-popup">
+    <section id="chat">
+      <div id="chat-container">
+        <div id="chat-header">
+          <span id="close-chat" onclick="closeChat()">×</span>
+          <h1 class="dashboard-text" style="font-size: medium;">Chat de Ayuda</h1>
+        </div>
+        <div id="chat-body">
+          <ul id="messages"></ul>
+        </div>
+        <form id="form" action="">
+
+          <input type="text" id="input" placeholder="Input a message" autocomplete="off" style="width: 100%;" />
+          <button id="send-btn">Send</button>
+        </form>
+      </div>
+    </section>
+  </div>
+  <!-- Botón del chat -->
+  <button class="chat-button" onclick="openChat()">
+    <img src="../../img/icon-chatbot.png" alt="Chat Icon">
+  </button>
 
   <!-- Incluye el script de Bootstrap al final del cuerpo para mejorar el rendimiento -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="../../js/generatedCards.js"></script>
-  <script type="module" src="../../js/chat.js"></script>
+  <script src="../../js/chat.js" type="module"></script>
   <!-- Incluye cualquier otro script personalizado aquí -->
   <script src="../../js/buttonChat.js"></script>
+  
 </body>
 
 </html>
