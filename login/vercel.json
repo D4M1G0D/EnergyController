@@ -1,9 +1,0 @@
-{
-    "version": 2,
-    "routes": [
-      { "src": "/login/.*", "dest": "/login/app.js" },
-      { "src": "/client/.*", "dest": "/frontend/client/homeClient.ejs" },
-      { "src": "/.*", "dest": "/login/views/login.ejs" }
-    ]
-  }
-  

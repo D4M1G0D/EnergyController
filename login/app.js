@@ -3,9 +3,6 @@ const express = require('express');
 const app = express();
 const nodemailer = require('nodemailer');
 
-
-
-
 // Configuración de nodemailer para enviar correos electrónicos
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -28,10 +25,7 @@ app.use('/resources',express.static('public'));
 app.use('/resources', express.static(__dirname + '/public'));
 
 //5 - Establecemos el motor de plantillas
-const ejs = require('ejs');
-app.set('view engine', 'ejs');
-
-
+app.set('view engine','ejs');
 
 //6 -Invocamos a bcrypt
 const bcrypt = require('bcryptjs');
