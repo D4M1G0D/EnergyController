@@ -143,21 +143,6 @@ app.get('/getDynamicDetailsDevices', (req, res) => {
 });
 
 
-/*app.get('/getDynamicDetailsDevices', (req, res) => {
-
-    const filePath = path.join(__dirname, 'dynamicDetailsDevices.json');
-
-    fs.writeFile(filePath, JSON.stringify(dynamicDetailsDevices, null, 2), 'utf-8', (err) => {
-        if (err) {
-            console.error("Error writing dynamicDetailsDevices file:", err.message);
-            res.status(500).send('Internal Server Error');
-            return;
-        }
-
-        console.log(`Dynamic details devices saved to ${filePath}`);
-        res.json(dynamicDetailsDevices);
-    });
-});*/
 
 app.post('/createDevice', (req, res) => {
     const newDeviceData = req.body;
@@ -192,6 +177,58 @@ app.post('/createDevice', (req, res) => {
         res.status(400).send('Bad Request');
     }
 });
+
+app.put('/updateDevice', (req, res) => {
+    const updatedDeviceData = req.body;
+
+    const updateRequest = new Request(`
+        UPDATE DEVICE 
+        SET Name_d = @Name_d, Category = @Category, KWh = @KWh, KgCO2h = @KgCO2h, Status_d = @Status_d, Room_ID = @Room_ID
+        WHERE ID = @ID;
+    `, (err) => {
+        if (err) {
+            console.error("Error executing update query:", err.message);
+            res.status(500).json({ message: 'Error updating device' });
+            return;
+        }
+
+        generateDynamicDevices(); // Actualiza la información dinámica de dispositivos
+        res.json({ message: 'Device updated successfully' });
+    });
+
+    updateRequest.addParameter('ID', TYPES.Int, updatedDeviceData.ID);
+    updateRequest.addParameter('Name_d', TYPES.NVarChar, updatedDeviceData.Name_d);
+    updateRequest.addParameter('Category', TYPES.NVarChar, updatedDeviceData.Category);
+    updateRequest.addParameter('KWh', TYPES.Int, updatedDeviceData.KWh);
+    updateRequest.addParameter('KgCO2h', TYPES.Float, updatedDeviceData.KgCO2h);
+    updateRequest.addParameter('Status_d', TYPES.NVarChar, updatedDeviceData.Status_d);
+    updateRequest.addParameter('Room_ID', TYPES.Int, updatedDeviceData.Room_ID);
+
+    connection.execSql(updateRequest);
+});
+
+app.delete('/deleteDevice', (req, res) => {
+    const deviceId = req.body.ID;
+
+    const deleteRequest = new Request(`
+        DELETE FROM DEVICE
+        WHERE ID = @ID;
+    `, (err) => {
+        if (err) {
+            console.error("Error executing deletion query:", err.message);
+            res.status(500).json({ message: 'Error deleting device' });
+            return;
+        }
+
+        generateDynamicDevices(); // Actualiza la información dinámica de dispositivos
+        res.json({ message: 'Device deleted successfully' });
+    });
+
+    deleteRequest.addParameter('ID', TYPES.Int, deviceId);
+
+    connection.execSql(deleteRequest);
+});
+
 
 // Manejo del evento 'disconnect' en Socket.IO
 io.on('disconnect', () => {

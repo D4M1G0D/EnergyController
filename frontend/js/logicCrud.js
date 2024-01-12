@@ -94,12 +94,64 @@ function updateDevice() {
     // Lógica para actualizar un dispositivo
     console.log('Update Device clicked'); // Agrega este mensaje a la consola
     document.getElementById('crudResult').innerText = 'Update Device clicked';
+    // Obtén los valores de los campos del formulario
+    const deviceId = document.getElementById('deviceId').value;
+    const category = document.getElementById('deviceCategory').value;
+    const name = document.getElementById('deviceName').value;
+    const consumption = document.getElementById('deviceConsumption').value;
+    const emissions = document.getElementById('deviceEmissions').value;
+    const status = document.getElementById('deviceStatus').value;
+    const roomNumber = document.getElementById('deviceRoomNumber').value;
+
+    // Realiza una solicitud al servidor para actualizar un dispositivo
+    fetch('/updateDevice', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            deviceId,
+            category,
+            name,
+            consumption,
+            emissions,
+            status,
+            roomNumber,
+        }),
+    })
+    .then(response => response.json())
+    .then(result => {
+        document.getElementById('crudResult').innerText = result.message;
+        hideForm(); // Cerrar el formulario después de actualizar el dispositivo
+        readDevices(); // Actualizar la tabla de dispositivos
+    })
+    .catch(error => console.error('Error updating device:', error));
 }
 
 function deleteDevice() {
     // Lógica para eliminar un dispositivo
     console.log('Delete Device clicked'); // Agrega este mensaje a la consola
     document.getElementById('crudResult').innerText = 'Delete Device clicked';
+     // Obtén el ID del dispositivo a eliminar
+     const deviceId = document.getElementById('deviceId').value;
+
+     // Realiza una solicitud al servidor para eliminar un dispositivo
+     fetch('/deleteDevice', {
+         method: 'DELETE',
+         headers: {
+             'Content-Type': 'application/json',
+         },
+         body: JSON.stringify({
+             deviceId,
+         }),
+     })
+     .then(response => response.json())
+     .then(result => {
+         document.getElementById('crudResult').innerText = result.message;
+         hideForm(); // Cerrar el formulario después de eliminar el dispositivo
+         readDevices(); // Actualizar la tabla de dispositivos
+     })
+     .catch(error => console.error('Error deleting device:', error));
 }
 
 function readDevices() {
