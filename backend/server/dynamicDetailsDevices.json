@@ -15,6 +15,14 @@
       "emissions": 4.5,
       "status": "ON",
       "roomNumber": 2
+    },
+    "device6": {
+      "id": 6,
+      "name": "BedRoom Light",
+      "consumption": 53,
+      "emissions": 4.5,
+      "status": "ON",
+      "roomNumber": 2
     }
   },
   "Cameras": {

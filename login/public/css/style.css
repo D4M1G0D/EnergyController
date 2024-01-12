@@ -9,6 +9,8 @@ body{
   .login-form, .contenedor {
     width: 300px;
     margin: 0 auto;
+    color: #ebdac1;
+    
   }
   .login-form h1 {
     text-align: center;
@@ -46,6 +48,15 @@ body{
   }
   
   /* Estilos boton REGISTER*/
+  .register-form label,h1 {
+    color: white;  /* Puedes cambiar 'white' por el color que desees */
+}
+.register-form h1{
+  color:#ebdac1;
+  
+}
+
+
   .btn-register{
     width: 100%;
     padding: 15px;
@@ -94,7 +105,7 @@ body{
   /* Estilos de link para realizar el LOGOUT*/
   .a-logout:link, .a-logout:visited {
     background-color: white;
-    color: black;
+    color: #ebdac1;
     border: 2px solid #F87171;
     padding: 10px 20px;
     text-align: center;
@@ -176,7 +187,7 @@ body{
   
   .register-form h1 {
     text-align: left;
-    color:midnightblue ;
+    color:#ebdac1;;
     font-size: 22px;
     padding: 70px 0 10px 0;
   }
@@ -190,6 +201,9 @@ body{
   }
   
   /* Estilos para el select dropdown */
+  .login-form a.btn {
+    color: white;
+}
   .select-css {
     display: block;
     font-size: 16px;  
