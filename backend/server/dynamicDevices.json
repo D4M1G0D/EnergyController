@@ -7,7 +7,11 @@
   "Lights": {
     "icon": "icon-Lights.png",
     "title": "Lights",
+<<<<<<< HEAD
     "value": "3"
+=======
+    "value": "4"
+>>>>>>> f26662d0e9624a5a32d28a888541519c195eef00
   },
   "Switches": {
     "icon": "icon-Switches.png",
