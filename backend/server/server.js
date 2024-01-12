@@ -18,6 +18,8 @@ const io = new Server(server);
 
 let totalDevices = 0;
 const dynamicDevices = {};
+const dynamicDetailsDevices = {};
+const devices = {};
 
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -49,7 +51,8 @@ const config = {
 };
 
 const connection = new Connection(config);
-let resultRows = [];
+const connection2 = new Connection(config);
+const connection3 = new Connection(config);
 
 connection.connect();
 
@@ -58,15 +61,41 @@ connection.on('connect', (err) => {
         console.log("Error connecting to the database");
         throw err;
     }
-    //getDevices();
-    //getDevicesCount();
+    setInterval(() => {
+        //getDevicesCount();
+        generateDynamicDevices();
+    }, 1000);
+
     
+    //generateDynamicDetailsDevices();
+    //connection.end();
+
+
+});
+
+connection2.connect();
+
+connection2.on('connect', (err) => {
+    if (err) {
+        console.log("Error connecting to the database");
+        throw err;
+    }
+    setInterval(() => {
+        generateDynamicDetailsDevices();
+    }, 1000);
+    
+});
+
+connection3.connect();
+
+connection3.on('connect', (err) => {
+    if (err) {
+        console.log("Error connecting to the database");
+        throw err;
+    }
     setInterval(() => {
         getDevicesCount();
     }, 1000);
-
-    generateDynamicDevices();
-
     
 });
 
@@ -97,6 +126,40 @@ app.get('/getDynamicDevices', (req, res) => {
         res.json(dynamicDevices);
     });
 });
+
+app.get('/getDynamicDetailsDevices', (req, res) => {
+    const filePath = path.join(__dirname, 'dynamicDetailsDevices.json');
+
+    fs.readFile(filePath, 'utf-8', (err, data) => {
+        if (err) {
+            console.error("Error reading dynamicDetailsDevices file:", err.message);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+
+        const dynamicDetailsDevices = JSON.parse(data);
+        res.json(dynamicDetailsDevices);
+    });
+});
+
+
+/*app.get('/getDynamicDetailsDevices', (req, res) => {
+
+    const filePath = path.join(__dirname, 'dynamicDetailsDevices.json');
+
+    fs.writeFile(filePath, JSON.stringify(dynamicDetailsDevices, null, 2), 'utf-8', (err) => {
+        if (err) {
+            console.error("Error writing dynamicDetailsDevices file:", err.message);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+
+        console.log(`Dynamic details devices saved to ${filePath}`);
+        res.json(dynamicDetailsDevices);
+    });
+});*/
+
+
 
 // Manejo del evento 'disconnect' en Socket.IO
 io.on('disconnect', () => {
@@ -208,38 +271,7 @@ app.post('/updateDevice', (req, res) => {
     }
 });
 
-
-function getDevices() {
-    console.log("Connected to the database")
-    const request = new Request("SELECT * FROM DEVICE", (err, rowCount) => {
-        if (err) {
-            console.log("Error executing query:", err.message);
-            throw err;
-        }
-    });
-
-    resultRows = [];
-
-    request.on('row', (columns) => {
-        const row = {};
-        columns.forEach((column) => {
-            row[column.metadata.colName] = column.value;
-        });
-        resultRows.push(row);
-        console.log(resultRows);
-    });
-
-    request.on('doneInProc', (rowCount, more, rows) => {
-        console.log("All rows:", resultRows);
-        io.emit('queryResult', resultRows);
-    });
-
-    request.on('done', (rowCount, more, rows) => {
-        connection.close();
-    });
-
-    connection.execSql(request);
-}*/
+*/
 
 
 function getDevicesCount() {
@@ -261,10 +293,10 @@ function getDevicesCount() {
     });
 
     request.on('done', (rowCount, more, rows) => {
-        connection.close();
+        connection3.close();
     });
 
-    connection.execSql(request);
+    connection3.execSql(request);
 }
 
 function saveDynamicDevicesToFile() {
@@ -305,4 +337,63 @@ function generateDynamicDevices() {
     });
 
     connection.execSql(request);
+}
+
+function saveDynamicDetailsDevicesToFile() {
+    const filePath = path.join(__dirname, 'dynamicDetailsDevices.json');
+    const jsonData = JSON.stringify(dynamicDetailsDevices, null, 2);
+
+    fs.writeFileSync(filePath, jsonData, 'utf-8');
+
+    console.log(`Dynamic details devices saved to ${filePath}`);
+}
+
+function generateDynamicDetailsDevices() {
+    const request = new Request("SELECT Category, ID, Name_d, KWh, KgCO2h, Status_d, Room_ID FROM DEVICE", (err, rowCount) => {
+        if (err) {
+            console.log("Error executing query:", err.message);
+            throw err;
+        }
+    });
+
+    request.on('row', (columns) => {
+        const category = columns[0].value;
+
+        // Verifica si la categoría ya existe en dynamicDevices
+        if (!dynamicDetailsDevices[category]) {
+            dynamicDetailsDevices[category] = {};
+        }
+
+        const deviceKey = `device${columns[1].value}`;
+
+        // Agrega la información del dispositivo a dynamicDevices[category]
+        dynamicDetailsDevices[category][deviceKey] = {
+            id: columns[1].value,
+            name: columns[2].value,
+            consumption: columns[3].value,
+            emissions: columns[4].value,
+            status: columns[5].value,
+            roomNumber: columns[6].value,
+        };
+
+        // Imprime la información del dispositivo en la consola
+        console.log(`Generated device for category '${category}' - ${deviceKey}:`, dynamicDetailsDevices[category][deviceKey]);
+    });
+
+    request.on('doneInProc', (rowCount, more, rows) => {
+        // Log the dynamically generated devices for each category
+        for (const category in dynamicDetailsDevices) {
+            console.log(`Generated devices for category '${category}':`, dynamicDetailsDevices[category]);
+        }
+
+        // Actualiza la variable devices con los dispositivos generados dinámicamente
+        for (const category in dynamicDetailsDevices) {
+            devices[category] = dynamicDetailsDevices[category];
+        }
+
+        io.emit('dynamicDetailsDevices', devices); // Envía las categorías generadas dinámicamente al cliente
+        saveDynamicDetailsDevicesToFile(); // Guarda dynamicDetailsDevices en un archivo
+    });
+
+    connection2.execSql(request);
 }

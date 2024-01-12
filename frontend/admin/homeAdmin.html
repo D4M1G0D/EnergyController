@@ -33,36 +33,60 @@
 
   <div class="container-fluid mx-auto text-center" style="margin-top: 40px;" id="adminDashboardContainer">
     <!-- Aquí puedes agregar tu interfaz de usuario para el CRUD -->
-    <button class="btn btn-secondary" style="color: #ebdac1; width: 20%;" onclick="showForm('Create')">Create
-      Device</button>
+    <button class="btn btn-secondary" style="color: #ebdac1; width: 20%;" onclick="showForm('Create')">CreateDevice</button>
     <button class="btn btn-secondary" style="color: #ebdac1; width: 20%;" onclick="readDevices()">Read Devices</button>
     <button class="btn btn-info" style="color: #ebdac1; width: 20%;" onclick="showForm('Update')">Update Device</button>
-    <button class="btn btn-danger" style="color: #ebdac1; width: 20%;" onclick="showForm('Delete')">Delete
-      Device</button>
-
+    <button class="btn btn-danger" style="color: #ebdac1; width: 20%;" onclick="showForm('Delete')">Delete Device</button>
+    
     <div id="crudResult"></div>
+
+    <div class="container-fluid w-75 mx-auto" style="margin-top: 20px;">
+      <!-- Tabla para mostrar detalles de dispositivos -->
+      <table class="table table-bordered table-dark table-hover" id="deviceDetailsTable">
+          <thead>
+              <tr>
+                  <th>ID</th>
+                  <th>Category</th>
+                  <th>Name</th>
+                  <th>Consumption</th>
+                  <th>Emissions</th>
+                  <th>Status</th>
+                  <th>Room Number</th>
+              </tr>
+          </thead>
+          <tbody id="deviceDetailsTableBody">
+              <!-- Aquí se generarán dinámicamente las filas de la tabla con JavaScript -->
+          </tbody>
+      </table>
+  </div>
 
     <!-- Input fields and labels for Create, Update, and Delete operations -->
     <div id="crudForm" style="display: none; width: 50%; justify-content: center;">
       <h3 id="deviceForm" style="color: #ebdac1;"></h3>
-      <label for="deviceId">ID:</label>
+      <label for="deviceId" style="color: #ebdac1;" >ID:</label>
       <input type="text" id="deviceId" class="form-control" placeholder="Enter Device ID">
 
       <!-- Resto de los campos (inicialmente visibles) -->
-      <label for="deviceConsumption">Consumption:</label>
+      <label for="deviceCategory" style="color: #ebdac1;">Category:</label>
+      <input type="text" id="deviceCategory" class="form-control" placeholder="Enter Category">
+
+      <label for="deviceName" style="color: #ebdac1;">Name:</label>
+      <input type="text" id="deviceName" class="form-control" placeholder="Enter Name">
+
+      <label for="deviceConsumption" style="color: #ebdac1;">Consumption:</label>
       <input type="text" id="deviceConsumption" class="form-control" placeholder="Enter Consumption">
 
-      <label for="deviceEmissions">Emissions:</label>
+      <label for="deviceEmissions"style="color: #ebdac1;">Emissions:</label>
       <input type="text" id="deviceEmissions" class="form-control" placeholder="Enter Emissions">
 
-      <label for="deviceStatus">Status:</label>
+      <label for="deviceStatus"style="color: #ebdac1;">Status:</label>
       <input type="text" id="deviceStatus" class="form-control" placeholder="Enter Status">
 
-      <label for="deviceRoomNumber">Room Number:</label>
+      <label for="deviceRoomNumber"style="color: #ebdac1;">Room Number:</label>
       <input type="text" id="deviceRoomNumber" class="form-control" placeholder="Enter Room Number">
 
-      <button class="btn btn-danger" style="margin-top: 40px; color: #ebdac1; " onclick="deleteDevice()">Delete</button>
-      <button class="btn btn-secondary" style="margin-top: 40px; color: #ebdac1; " onclick="hideForm()">Cancel</button>
+      <button type="button" class="btn btn-success" style="margin-top: 40px; color: #ebdac1;" onclick="submitForm()">Send</button>
+      <button class="btn btn-danger" style="margin-top: 40px; color: #ebdac1; " onclick="hideForm()">Cancel</button>
     </div>
 
     <!-- Ventana emergente del chat -->
@@ -95,58 +119,7 @@
     <script type="module" src="../js/chat.js"></script>
     <!-- Incluye cualquier otro script personalizado aquí -->
     <script src="../js/buttonChat.js"></script>
-    <script>
-      function showForm(operation) {
-        document.getElementById('crudResult').innerText = ''; // Clear previous results
-        var form = document.getElementById('crudForm');
-        form.style.display = 'block'; // Show the form
-
-        // Reset form fields
-        document.getElementById('deviceId').value = '';
-        document.getElementById('deviceConsumption').value = '';
-        document.getElementById('deviceEmissions').value = '';
-        document.getElementById('deviceStatus').value = '';
-        document.getElementById('deviceRoomNumber').value = '';
-
-        // Set appropriate form title based on the operation
-        document.getElementById('deviceForm').innerText = operation.toUpperCase() + ' Device';
-      }
-
-      function submitForm() {
-        // Perform form submission logic here
-        var operation = document.getElementById('deviceForm').innerText;
-        document.getElementById('crudResult').innerText = operation + ' clicked';
-        hideForm();
-      }
-
-      function hideForm() {
-        document.getElementById('crudForm').style.display = 'none'; // Hide the form
-      }
-
-      function createDevice() {
-        // Aquí puedes agregar lógica para crear un dispositivo
-        document.getElementById('crudResult').innerText = 'Create Device clicked';
-        hideForm(); // Cerrar el formulario después de hacer clic en el botón
-      }
-
-      function readDevices() {
-        // Aquí puedes agregar lógica para leer dispositivos
-        document.getElementById('crudResult').innerText = 'Read Devices clicked';
-        hideForm(); // Cerrar el formulario después de hacer clic en el botón
-      }
-
-      function updateDevice() {
-        // Aquí puedes agregar lógica para actualizar un dispositivo
-        document.getElementById('crudResult').innerText = 'Update Device clicked';
-        hideForm(); // Cerrar el formulario después de hacer clic en el botón
-      }
-
-      function deleteDevice() {
-        // Aquí puedes agregar lógica para eliminar un dispositivo
-        document.getElementById('crudResult').innerText = 'Delete Device clicked';
-        hideForm(); // Cerrar el formulario después de hacer clic en el botón
-      }
-    </script>
+    <script src="../js/logicCrud.js"></script>
 
 
 </body>

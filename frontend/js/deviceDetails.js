@@ -5,11 +5,11 @@ function getCategoryFromURL() {
 }
 
 // Función para generar dinámicamente las filas de la tabla
-function generateTableRows(category) {
+function generateTableRows(category, dynamicDevices) {
   var deviceDetailsTableBody = document.getElementById('deviceDetailsTableBody');
 
-  // Obtén la lista de dispositivos de la categoría seleccionada
-  var devicesInCategory = devices[category];
+  // Obtén la lista de dispositivos de la categoría seleccionada desde dynamicDevices
+  var devicesInCategory = dynamicDevices[category];
 
   // Validar si la categoría está definida
   if (devicesInCategory) {
@@ -35,23 +35,6 @@ function generateTableRows(category) {
   }
 }
 
-// Datos ficticios para dispositivos en diferentes categorías
-var devices = {
-  Cameras: {
-    'device1': { id: 1, consumption: '10W', emissions: '5kg', status: 'Active', roomNumber: '101' },
-    'device2': { id: 2, consumption: '8W', emissions: '4kg', status: 'Inactive', roomNumber: '102' },
-  },
-  Switches: {
-    'device3': { id: 3, consumption: '15W', emissions: '7kg', status: 'Active', roomNumber: '201' },
-    'device4': { id: 4, consumption: '12W', emissions: '6kg', status: 'Inactive', roomNumber: '202' },
-  },
-  Lights: {
-    'device5': { id: 5, consumption: '5W', emissions: '3kg', status: 'Active', roomNumber: '301' },
-    'device6': { id: 6, consumption: '4W', emissions: '2kg', status: 'Inactive', roomNumber: '302' },
-  },
-  // Agrega más categorías y datos ficticios según sea necesario
-};
-
 // Llama a la función para generar las filas de la tabla al cargar la página
 window.onload = function () {
   var category = getCategoryFromURL();
@@ -66,9 +49,12 @@ window.onload = function () {
       iconElement.src = `../../img/icon-${category.toLowerCase()}.png`;
     }
 
-    generateTableRows(category);
+    // Llama a la función para generar las filas de la tabla con la información de dynamicDetailsDevices
+    fetch('/getDynamicDetailsDevices')
+      .then(response => response.json())
+      .then(dynamicDevices => generateTableRows(category, dynamicDevices))
+      .catch(error => console.error('Error fetching dynamic details devices:', error));
   } else {
     console.error("La categoría no está definida en la URL.");
   }
 };
-
