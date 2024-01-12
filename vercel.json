@@ -1,0 +1,10 @@
+{
+    "version": 2,
+    "routes": [
+      { "handle": "filesystem" },
+      { "src": "/login/.*", "dest": "/login/app.js" },
+      { "src": "/client/.*", "dest": "/frontend/client/homeClient.ejs" },
+      { "src": "/.*", "dest": "/login/views/login.ejs" }
+    ]
+  }
+  
