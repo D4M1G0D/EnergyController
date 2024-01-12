@@ -159,7 +159,39 @@ app.get('/getDynamicDetailsDevices', (req, res) => {
     });
 });*/
 
+app.post('/createDevice', (req, res) => {
+    const newDeviceData = req.body;
 
+    if (newDeviceData && newDeviceData.ID) {
+        const insertRequest = new Request(`
+            INSERT INTO DEVICE (ID, Category, Name_d, KWh, KgCO2h, Status_d, Room_ID) 
+            VALUES (@ID, @Category, @Name_d, @KWh, @KgCO2h, @Status_d, @Room_ID);
+        `, (err) => {
+            if (err) {
+                console.error("Error executing insertion query:", err.message);
+                res.status(500).send('Internal Server Error');
+                return;
+            }
+
+            // Realiza cualquier otra lógica necesaria después de la inserción
+
+            res.status(200).json({ message: 'Device created successfully' });
+        });
+
+        insertRequest.addParameter('ID', TYPES.Int, newDeviceData.ID);
+        insertRequest.addParameter('Name_d', TYPES.NVarChar, newDeviceData.Name_d);
+        insertRequest.addParameter('Category', TYPES.NVarChar, newDeviceData.Category);
+        insertRequest.addParameter('KWh', TYPES.Int, newDeviceData.KWh);
+        insertRequest.addParameter('KgCO2h', TYPES.Float, newDeviceData.KgCO2h);
+        insertRequest.addParameter('Status_d', TYPES.NVarChar, newDeviceData.Status_d);
+        insertRequest.addParameter('Room_ID', TYPES.Int, newDeviceData.Room_ID);
+
+        connection.execSql(insertRequest);
+    } else {
+        console.error("Invalid device data");
+        res.status(400).send('Bad Request');
+    }
+});
 
 // Manejo del evento 'disconnect' en Socket.IO
 io.on('disconnect', () => {
